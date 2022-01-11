@@ -1,3 +1,4 @@
+require("@nomiclabs/hardhat-ethers");
 require("@nomiclabs/hardhat-waffle");
 require("dotenv").config();
 
@@ -20,6 +21,7 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
  * @type import('hardhat/config').HardhatUserConfig
  */
 module.exports = {
+  defaultNetwork: "hardhat",
   solidity: "0.8.4",
   networks: {
     extropy: {
@@ -27,6 +29,8 @@ module.exports = {
       accounts: [process.env.DEFI_PRIV_KEY],
       chainId: 20200520,
       gasPrice: 1000000000,
+      gas: 2100000,
     },
+    hardhat: {},
   },
 };
