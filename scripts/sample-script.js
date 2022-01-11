@@ -1,8 +1,3 @@
-// We require the Hardhat Runtime Environment explicitly here. This is optional
-// but useful for running the script in a standalone fashion through `node <script>`.
-//
-// When running the script with `npx hardhat run <script>` you'll find the Hardhat
-// Runtime Environment's members available in the global scope.
 const { ethers } = require("hardhat");
 const {
   abi,
@@ -21,19 +16,15 @@ const SushiMakerAddress = "0xcdBCFa2243aD006cC62bA079D393cf28E0E3BaF5";
 
 const USER_ADDRESS = "0xd0389eae8a1524AFD64F9595172b390415eE1075";
 
-// const provider = new ethers.providers.Web3Provider();
+const prov = new ethers.providers.JsonRpcProvider("http://18.130.233.246:9454");
 
 async function main() {
   // const Extropy_Contract = ethers.getContractAt("ERC20", ExtropyCoinAddress);
 
-  // const test = await ethers.provider.getBlockNumber();
-
-  // console.log(test);
-
   const uniswapRouter = new ethers.Contract(
     UniswapV2Router02Address,
     abi,
-    ethers.provider
+    prov
   );
 
   // console.log("ABI ", abi);
@@ -41,8 +32,13 @@ async function main() {
 
   console.log(uniswapRouter);
 
-  // console.log(await uniswapRouter.allPairsLength());
+  const test = await uniswapRouter.getPair(ExtropyCoinAddress, DAIAddress);
 
+  // try {
+  //   console.log(await uniswapRouter.allPairsLength());
+  // } catch (error) {
+  //   console.error(error);
+  // }
   // const daiEx = await uniswapRouter.getPair(
   //   ethers.utils.getAddress(DAIAddress),
   //   ethers.utils.getAddress(ExtropyCoinAddress)
@@ -51,8 +47,6 @@ async function main() {
   // console.log(daiEx);
 }
 
-// We recommend this pattern to be able to use async/await everywhere
-// and properly handle errors.
 main()
   .then(() => process.exit(0))
   .catch((error) => {
